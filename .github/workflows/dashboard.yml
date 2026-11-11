@@ -1,0 +1,47 @@
+name: Dashboard GitHub pour TRMNL
+
+on:
+  workflow_dispatch:        # bouton « Run workflow »
+  schedule:
+    - cron: "17 * * * *"    # toutes les heures
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Installer le navigateur de rendu
+        run: |
+          pip install playwright pillow
+          python -m playwright install --with-deps chromium
+
+      - name: Générer l'image 800×480
+        env:
+          GH_LOGIN: ${{ vars.GH_LOGIN || github.repository_owner }}
+          GH_TOKEN: ${{ secrets.GH_STATS_TOKEN || github.token }}
+          TZ_NAME: Europe/Paris
+        run: python build.py
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+      - id: deploy
+        uses: actions/deploy-pages@v4
