@@ -540,7 +540,8 @@ body{{font-family:'Inter Tight',Inter,sans-serif;-webkit-font-smoothing:none;fon
 .who{{flex:1;min-width:0}}
 .who h1{{font-size:26px;font-weight:800;letter-spacing:-.8px;line-height:26px;white-space:nowrap}}
 .who .l2{{display:flex;gap:8px;align-items:baseline;font-size:11px;font-weight:600;white-space:nowrap;overflow:hidden;margin-top:1px}}
-.who .l2 .mono{{font-size:10px;font-weight:700}}
+.who .l2 .mono{{font-size:10px;font-weight:700;flex:none}}
+.who .l2 span:last-child{{overflow:hidden;text-overflow:ellipsis;min-width:0}}
 .meta{{display:flex;gap:11px;font-size:8.5px;font-weight:700;margin-top:3px;white-space:nowrap}}
 .meta span{{display:flex;gap:3px;align-items:center}}
 .upd{{text-align:right;font:700 8px/1.3 'Azeret Mono',monospace;align-self:flex-end;margin-bottom:8px}}
